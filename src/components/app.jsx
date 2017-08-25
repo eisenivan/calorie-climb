@@ -37,7 +37,7 @@ const caloriesPerFlight = () => caloriesPerStep * 12
 
 const CalorieClimb = ({ calories }) => {
   const flightsOfStairs = (parseInt(calories, 10) / caloriesPerFlight()).toFixed(1)
-  const individualSteps = Math.ceil(parseInt(calories, 10) / caloriesPerStep)
+  const individualSteps = Math.ceil(parseInt(calories, 10) / caloriesPerStep) / 2
   const pluralized = (flightsOfStairs === 1) ? 'flight' : 'flights'
   const flights = pluralized ? 'flights' : 'flight'
   const steps = pluralized ? 'steps' : 'step'
@@ -51,7 +51,7 @@ const CalorieClimb = ({ calories }) => {
         </Field>
         <p className={ resultText }>You burn <strong>0.17</strong> calories going up a stair, and <strong>0.05</strong> going back down.</p>
         { (!isNaN(flightsOfStairs)) ?
-          <p className={ resultText }>To make this meal calorie neutral you would need to walk up and down <span className={ resultHighlightText }>{ flightsOfStairs } { flights } of stairs.</span> That is <span className={ resultHighlightText }>{ individualSteps } { steps }.</span> Get walking.</p>
+          <p className={ resultText }>To make this meal calorie neutral you would need to walk up and down <span className={ resultHighlightText }>{ flightsOfStairs } { flights } of stairs.</span> That is up and down <span className={ resultHighlightText }>{ individualSteps } { steps }.</span> Get walking.</p>
         : null }
       </FormContainer>
     </App>
