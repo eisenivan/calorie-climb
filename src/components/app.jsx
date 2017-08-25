@@ -32,10 +32,16 @@ const textInput = css`
   padding: 0.5rem;
   width: 100%;
 `
-const caloriesPerFlight = () => (0.17 + 0.05) * 12
+const caloriesPerStep = 0.17 + 0.05
+const caloriesPerFlight = () => caloriesPerStep * 12
 
 const CalorieClimb = ({ calories }) => {
-  const finalNumber = (parseInt(calories, 10) / caloriesPerFlight()).toFixed(1)
+  const flightsOfStairs = (parseInt(calories, 10) / caloriesPerFlight()).toFixed(1)
+  const individualSteps = Math.ceil(parseInt(calories, 10) / caloriesPerStep)
+  const pluralized = (flightsOfStairs === 1) ? 'flight' : 'flights'
+  const flights = pluralized ? 'flights' : 'flight'
+  const steps = pluralized ? 'steps' : 'step'
+
   return (
     <App>
       <FormContainer>
@@ -44,8 +50,8 @@ const CalorieClimb = ({ calories }) => {
           <input className={ textInput } type="text" />
         </Field>
         <p className={ resultText }>You burn <strong>0.17</strong> calories going up a stair, and <strong>0.05</strong> going back down.</p>
-        { (!isNaN(finalNumber)) ?
-          <p className={ resultText }>To make this meal calorie neutral you would need to walk up and down <span className={ resultHighlightText }>{ finalNumber }</span> flight of stairs.</p>
+        { (!isNaN(flightsOfStairs)) ?
+          <p className={ resultText }>To make this meal calorie neutral you would need to walk up and down <span className={ resultHighlightText }>{ flightsOfStairs } { flights } of stairs.</span> That is <span className={ resultHighlightText }>{ individualSteps } { steps }.</span> Get walking.</p>
         : null }
       </FormContainer>
     </App>
