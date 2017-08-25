@@ -20,6 +20,11 @@ const inputLabel = css`
 const resultText = css`
   font-size: 14px;
 `
+
+const introText = css`
+  composes: ${resultText};
+  margin-bottom: 0.5rem;
+`
 const resultHighlightText = css`
   font-size: 18px;
   font-weight: 900;
@@ -49,7 +54,7 @@ const CalorieClimb = ({ calories }) => {
           <label className={ inputLabel }>How many calories?</label>
           <input className={ textInput } type="text" />
         </Field>
-        <p className={ resultText }>You burn <strong>0.17</strong> calories going up a stair, and <strong>0.05</strong> going back down.</p>
+        <p className={ introText }>You burn <strong>0.17</strong> calories going up a stair, and <strong>0.05</strong> going back down.</p>
         { (!isNaN(flightsOfStairs)) ?
           <p className={ resultText }>To make this meal calorie neutral you would need to walk up and down <span className={ resultHighlightText }>{ flightsOfStairs } { flights } of stairs.</span> That is up and down <span className={ resultHighlightText }>{ individualSteps } { steps }.</span> Get walking.</p>
         : null }
