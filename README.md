@@ -1,12 +1,7 @@
-# React, Emotion, Redux-Little-Router, Redux, Redux Saga, Immutable, Babel/ES7, Webpack HMR boilerplate
+# Calorie Count
 
-## Features
-* Webpack Hot Module Reloading (HMR)
-* Optional Webpack Dashboard for useful terminal output while developing
-* A fairly production-ready webpack config (uglify, minify, image compression, image inlining) (tailor it further based on the needs of your project)
+I was looking for an excuse to play with Webpack2 and Emotion so I threw this calculator together. The inspiration came from a pending move to the 21st floor of an office building at work. We have a cafeteria so I wanted a quick way to figure out how many flights of stairs I would need to take to make my snack calorie neutral.
 
-## Installation
-* Clone
-* npm install
+Honestly I realize that almost all of my projects are in private repos, and I'd like to start creating some public projects. Hopefully this serves as my gateway project.
 
-## Note: this isn't 100% finished, but it's very close
+The project is running at http://calorieclimb.eisenberg.ninja. I'm hosting it with Surge.sh, which is quickly turning into my favorite thing about the internet.
