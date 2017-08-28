@@ -44,6 +44,7 @@ const appHeader = css`
   display: flex;
   height: 60px;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: ${marginBottom};
   padding: 10px 30px;
   width: 100%;
