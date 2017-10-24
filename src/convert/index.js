@@ -8,7 +8,7 @@ export const MEASURE_TYPES = {
   // VOLUME: 'VOLUME',
   // FLUID: 'FLUID',
   TIME: 'TIME',
-  // VELOCITY: 'VELOCITY',
+  VELOCITY: 'VELOCITY',
   // ACCELERATION: 'ACCELERATION',
 }
 
@@ -92,10 +92,21 @@ export const MEASURE = {
     // CENTURY: 'CENTURY',
     // MILLENNIUM: 'MILLENNIUM',
   },
+  [MEASURE_TYPES.VELOCITY]: {
+    // NOTE: Built in the below for loop
+  },
+}
+
+// Build the velocity units
+for (const distanceUnit in MEASURE.DISTANCE) {
+  for (const timeUnit in MEASURE.TIME) {
+    MEASURE[MEASURE_TYPES.VELOCITY][`${distanceUnit}_PER_${timeUnit}`] = `${distanceUnit}_PER_${timeUnit}`
+  }
 }
 
 export const unitAsEnglish = (quantity, units) => {
   switch (units) {
+    /** DISTANCE **/
     case MEASURE.DISTANCE.INCH:
       return quantity == 1 ? 'inch' : 'inches' // eslint-disable-line eqeqeq
     case MEASURE.DISTANCE.FOOT:
@@ -106,6 +117,52 @@ export const unitAsEnglish = (quantity, units) => {
       return quantity == 1 ? 'miles' : 'miles' // eslint-disable-line eqeqeq
     case MEASURE.DISTANCE.METER:
       return quantity == 1 ? 'meter' : 'meters' // eslint-disable-line eqeqeq
+    /** TIME **/
+    /** VELOCITY **/
+    case MEASURE.VELOCITY.INCHES_PER_SECOND:
+      return quantity == 1 ? 'inch/sec' : 'inches/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.INCHES_PER_MINUTE:
+      return quantity == 1 ? 'inch/min' : 'inches/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.INCHES_PER_HOUR:
+      return quantity == 1 ? 'inch/hr' : 'inches/hr' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.INCHES_PER_DAY:
+      return quantity == 1 ? 'inch/day' : 'inches/day' // eslint-disable-line eqeqeq
+
+    case MEASURE.VELOCITY.FOOT_PER_SECOND:
+      return quantity == 1 ? 'foot/sec' : 'feet/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.FOOT_PER_MINUTE:
+      return quantity == 1 ? 'foot/min' : 'feet/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.FOOT_PER_HOUR:
+      return quantity == 1 ? 'foot/hr' : 'feet/hr' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.FOOT_PER_DAY:
+      return quantity == 1 ? 'foot/day' : 'feet/day' // eslint-disable-line eqeqeq
+
+    case MEASURE.VELOCITY.YARD_PER_SECOND:
+      return quantity == 1 ? 'yard/sec' : 'yards/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.YARD_PER_MINUTE:
+      return quantity == 1 ? 'yard/min' : 'yards/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.YARD_PER_HOUR:
+      return quantity == 1 ? 'yard/hr' : 'yards/hr' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.YARD_PER_DAY:
+      return quantity == 1 ? 'yard/day' : 'yards/day' // eslint-disable-line eqeqeq
+
+    case MEASURE.VELOCITY.MILE_PER_SECOND:
+      return quantity == 1 ? 'mile/sec' : 'miles/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.MILE_PER_MINUTE:
+      return quantity == 1 ? 'mile/min' : 'miles/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.MILE_PER_HOUR:
+      return 'mph'
+    case MEASURE.VELOCITY.MILE_PER_DAY:
+      return quantity == 1 ? 'mile/day' : 'miles/day' // eslint-disable-line eqeqeq
+
+    case MEASURE.VELOCITY.METER_PER_SECOND:
+      return quantity == 1 ? 'meter/sec' : 'meters/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.METER_PER_MINUTE:
+      return quantity == 1 ? 'meter/min' : 'meters/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.METER_PER_HOUR:
+      return quantity == 1 ? 'meter/hr' : 'meters/hr' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.METER_PER_DAY:
+      return quantity == 1 ? 'meter/day' : 'meters/day' // eslint-disable-line eqeqeq
   }
 }
 
@@ -170,11 +227,31 @@ const conversionChart = {
   [`${MEASURE.TIME.DAY}__${MEASURE.TIME.HOUR}`]: (quantity) => Big(quantity).times(24),
 }
 
-export const convert = (quantity, from, to) => {
+export const convert = (quantity, from = '', to = '') => {
   try {
     if (isNaN(quantity)) {
       console.error('Unable to convert, quantity is not a number') // eslint-disable-line no-console
       return quantity
+    }
+
+    if (MEASURE.VELOCITY.hasOwnProperty(from)) {
+      const [
+        fromDistance,
+        fromTime,
+      ] = from.split('_PER_')
+      const [
+        toDistance,
+        toTime,
+      ] = to.split('_PER_')
+      const conversionRateDistance = conversionChart[`${fromDistance}__${toDistance}`]
+      const conversionRateTime = conversionChart[`${fromTime}__${toTime}`]
+
+      if (conversionRateDistance == null || conversionRateTime == null) {
+        console.error(`Unable to convert from ${from} to ${to}. Either this conversion is impossible or we will add it soon.`) // eslint-disable-line no-console
+        return quantity
+      }
+
+      return conversionRateDistance(conversionRateTime(quantity)).toString()
     }
 
     const conversionRate = conversionChart[`${from}__${to}`]

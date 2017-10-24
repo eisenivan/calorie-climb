@@ -1,0 +1,18 @@
+import {
+  convert,
+  MEASURE,
+  // unitAsEnglish, // TODO
+} from '../convert'
+
+test('Convert DISTANCE', () => {
+  expect(convert(72, MEASURE.DISTANCE.INCH, MEASURE.DISTANCE.INCH)).toBe('72')
+  expect(convert(12, MEASURE.DISTANCE.INCH, MEASURE.DISTANCE.FOOT)).toBe('1')
+  expect(convert(72, MEASURE.DISTANCE.INCH, MEASURE.DISTANCE.YARD)).toBe('2')
+  expect(convert(7782, MEASURE.DISTANCE.INCH, MEASURE.DISTANCE.MILE)).toBe('0.12282196969696969697')
+  expect(convert(7782, MEASURE.DISTANCE.INCH, MEASURE.DISTANCE.METER)).toBe('197.6628')
+})
+
+test('Convert DISTANCE_PER_TIME', () => {
+  expect(convert(72, MEASURE.VELOCITY.INCH_PER_SECOND, MEASURE.VELOCITY.INCH_PER_MINUTE)).toBe('1.2')
+  expect(convert(72, MEASURE.VELOCITY.INCH_PER_SECOND, MEASURE.VELOCITY.INCH_PER_HOUR)).toBe('0.02')
+})
