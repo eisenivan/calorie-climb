@@ -28,13 +28,13 @@ export const MEASURE = {
     METER: 'METER',
     // DECAMETER: 'DECAMETER',
     // KILOMETER: 'KILOMETER',
-    // ROD: 'ROD',
+    ROD: 'ROD',
     // NAUTICAL_MILE: 'NAUTICAL_MILE',
     // NAUTICAL_LEAGUE: 'NAUTICAL_LEAGUE',
     // LEAGUE: 'LEAGUE',
     // CABLE: 'CABLE',
     // US_CABLE: 'US_CABLE',
-    // FATHOM: 'FATHOM',
+    FATHOM: 'FATHOM',
     // LAND: 'LAND',
     // BOLT: 'BOLT',
     // POLE: 'POLE',
@@ -117,6 +117,10 @@ export const unitAsEnglish = (quantity, units) => {
       return quantity == 1 ? 'miles' : 'miles' // eslint-disable-line eqeqeq
     case MEASURE.DISTANCE.METER:
       return quantity == 1 ? 'meter' : 'meters' // eslint-disable-line eqeqeq
+    case MEASURE.DISTANCE.ROD:
+      return quantity == 1 ? 'rod' : 'rods' // eslint-disable-line eqeqeq
+    case MEASURE.DISTANCE.FATHOM:
+      return quantity == 1 ? 'fathom' : 'fathoms' // eslint-disable-line eqeqeq
     /** TIME **/
     /** VELOCITY **/
     case MEASURE.VELOCITY.INCHES_PER_SECOND:
@@ -163,6 +167,24 @@ export const unitAsEnglish = (quantity, units) => {
       return quantity == 1 ? 'meter/hr' : 'meters/hr' // eslint-disable-line eqeqeq
     case MEASURE.VELOCITY.METER_PER_DAY:
       return quantity == 1 ? 'meter/day' : 'meters/day' // eslint-disable-line eqeqeq
+
+    case MEASURE.VELOCITY.FATHOM_PER_SECOND:
+      return quantity == 1 ? 'fathom/sec' : 'fathoms/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.FATHOM_PER_MINUTE:
+      return quantity == 1 ? 'fathom/min' : 'fathoms/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.FATHOM_PER_HOUR:
+      return quantity == 1 ? 'fathom/hr' : 'fathoms/hr' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.FATHOM_PER_DAY:
+      return quantity == 1 ? 'fathom/day' : 'fathoms/day' // eslint-disable-line eqeqeq
+
+    case MEASURE.VELOCITY.ROD_PER_SECOND:
+      return quantity == 1 ? 'rod/sec' : 'rods/sec' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.ROD_PER_MINUTE:
+      return quantity == 1 ? 'rod/min' : 'rods/min' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.ROD_PER_HOUR:
+      return quantity == 1 ? 'rod/hr' : 'rods/hr' // eslint-disable-line eqeqeq
+    case MEASURE.VELOCITY.ROD_PER_DAY:
+      return quantity == 1 ? 'rod/day' : 'rods/day' // eslint-disable-line eqeqeq
   }
 }
 
@@ -180,30 +202,56 @@ const conversionChart = {
   [`${MEASURE.DISTANCE.INCH}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).div(36),
   [`${MEASURE.DISTANCE.INCH}__${MEASURE.DISTANCE.MILE}`]: (quantity) => Big(quantity).div(63360),
   [`${MEASURE.DISTANCE.INCH}__${MEASURE.DISTANCE.METER}`]: (quantity) => Big(quantity).times(0.0254),
+  [`${MEASURE.DISTANCE.INCH}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => Big(quantity).times(0.0254).div(1.828804), // -> meter -> fathom
+  [`${MEASURE.DISTANCE.INCH}__${MEASURE.DISTANCE.ROD}`]: (quantity) => Big(quantity).div(12).div(16.5), // -> foot -> rod
   // FOOT -->
   [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.FOOT}`]: (quantity) => quantity,
+  [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).times(12),
   [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).div(3),
-  [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).div(5280),
-  [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).div(12),
+  [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.MILE}`]: (quantity) => Big(quantity).div(5280),
   [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.METER}`]: (quantity) => Big(quantity).times(0.3048006),
+  [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => Big(quantity).times(0.3048006).div(1.828804), // -> meter -> fathom
+  [`${MEASURE.DISTANCE.FOOT}__${MEASURE.DISTANCE.ROD}`]: (quantity) => Big(quantity).div(16.5),
   // YARD -->
   [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.YARD}`]: (quantity) => quantity,
   [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.MILE}`]: (quantity) => Big(quantity).div(1760),
   [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).div(36),
   [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.FOOT}`]: (quantity) => Big(quantity).times(3),
   [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.METER}`]: (quantity) => Big(quantity).times(0.9144),
+  [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => Big(quantity).times(0.9144).div(1.828804), // -> meter -> fathom
+  [`${MEASURE.DISTANCE.YARD}__${MEASURE.DISTANCE.ROD}`]: (quantity) => Big(quantity).times(3).div(16.5), // -> foot -> rod
   // MILE -->
   [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.MILE}`]: (quantity) => quantity,
   [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).times(63360),
   [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.FOOT}`]: (quantity) => Big(quantity).times(5280),
   [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).times(1760),
   [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.METER}`]: (quantity) => Big(quantity).times(1609.344),
+  [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => Big(quantity).times(1609.344).div(1.828804), // -> meter -> fathom
+  [`${MEASURE.DISTANCE.MILE}__${MEASURE.DISTANCE.ROD}`]: (quantity) => Big(quantity).times(320),
   // METER -->
   [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.METER}`]: (quantity) => quantity,
   [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).div(0.0254),
   [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.FOOT}`]: (quantity) => Big(quantity).div(0.3048006),
   [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).div(0.9144),
   [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.MILE}`]: (quantity) => Big(quantity).div(1609.344),
+  [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => Big(quantity).div(1.828804),
+  [`${MEASURE.DISTANCE.METER}__${MEASURE.DISTANCE.ROD}`]: (quantity) => Big(quantity).div(0.3048006).div(16.5), //  -> foot -> rod
+  // FATHOM -->
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => quantity,
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).times(1.828804).div(0.0254), // -> meter -> inch
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.FOOT}`]: (quantity) => Big(quantity).times(1.828804).div(0.3048006), // -> meter -> foot
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).times(1.828804).div(0.9144), // -> meter -> yard
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.MILE}`]: (quantity) => Big(quantity).times(1.828804).div(1609.344), // -> meter -> mile
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.METER}`]: (quantity) => Big(quantity).times(1.828804),
+  [`${MEASURE.DISTANCE.FATHOM}__${MEASURE.DISTANCE.ROD}`]: (quantity) => Big(quantity).times(1.828804).div(0.3048006).div(16.5), // -> meter -> foot -> rod
+  // ROD -->
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.ROD}`]: (quantity) => quantity,
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.INCH}`]: (quantity) => Big(quantity).times(198),
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.FOOT}`]: (quantity) => Big(quantity).times(16.5),
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.YARD}`]: (quantity) => Big(quantity).times(5.5),
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.MILE}`]: (quantity) => Big(quantity).times(0.003125),
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.METER}`]: (quantity) => Big(quantity).times(16.5).times(0.3048006), // -> foot -> meter
+  [`${MEASURE.DISTANCE.ROD}__${MEASURE.DISTANCE.FATHOM}`]: (quantity) => Big(quantity).times(16.5).times(0.3048006).div(1.828804), // -> foot -> meter -> fathom
   /** TIME **/
   // SECOND -->
   [`${MEASURE.TIME.SECOND}__${MEASURE.TIME.SECOND}`]: (quantity) => quantity,
