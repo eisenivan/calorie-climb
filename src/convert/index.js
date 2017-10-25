@@ -1,4 +1,5 @@
 import Big from 'big.js'
+import numeral from 'numeral'
 
 export const MEASURE_TYPES = {
   DISTANCE: 'DISTANCE',
@@ -282,6 +283,8 @@ export const convert = (quantity, from = '', to = '') => {
       return quantity
     }
 
+    let returnValue
+
     if (MEASURE.VELOCITY.hasOwnProperty(from)) {
       const [
         fromDistance,
@@ -299,17 +302,19 @@ export const convert = (quantity, from = '', to = '') => {
         return quantity
       }
 
-      return conversionRateDistance(conversionRateTime(quantity)).toString()
+      returnValue = conversionRateDistance(conversionRateTime(quantity)).toString()
+    } else {
+      const conversionRate = conversionChart[`${from}__${to}`]
+
+      if (conversionRate == null) {
+        console.error(`Unable to convert from ${from} to ${to}. Either this conversion is impossible or we will add it soon.`) // eslint-disable-line no-console
+        return quantity
+      }
+
+      returnValue = conversionRate(quantity).toString()
     }
 
-    const conversionRate = conversionChart[`${from}__${to}`]
-
-    if (conversionRate == null) {
-      console.error(`Unable to convert from ${from} to ${to}. Either this conversion is impossible or we will add it soon.`) // eslint-disable-line no-console
-      return quantity
-    }
-
-    return conversionRate(quantity).toString()
+    return numeral(returnValue).format()
   } catch (e) {
     throw new Error('Unable to convert', e)
   }

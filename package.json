@@ -104,6 +104,7 @@
   "dependencies": {
     "big.js": "^5.0.3",
     "mathjs": "^3.16.5",
+    "numeral": "^2.0.6",
     "react-redux-form": "^1.14.1"
   }
 }
