@@ -57,6 +57,7 @@ const resultCss = {
 }
 
 const CalorieClimb = ({ calories }) => {
+  const sanitizedCalories = parseInt(calories, 10)
   return (
     <App>
       <header className={ appHeader }>
@@ -70,9 +71,9 @@ const CalorieClimb = ({ calories }) => {
           <label className={ inputLabel }>How many calories are you trying to burn?</label>
           <input className={ textInput } type="text" />
         </Field>
-        { (!isNaN(calories)) ?
+        { (sanitizedCalories > 0) ?
           <div>
-            { counters(calories, resultCss) }
+            { counters(sanitizedCalories, resultCss) }
           </div>
         : null }
       </FormContainer>
