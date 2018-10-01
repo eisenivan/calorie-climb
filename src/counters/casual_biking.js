@@ -2,7 +2,7 @@ import React from 'react'
 import math from 'mathjs'
 import { convert, randomConversionUnit, MEASURE_TYPES, MEASURE, unitAsEnglish } from '../convert'
 
-export default (calories, { resultText, resultHighlightText }) => {
+export default ({ calories, resultText, resultHighlightText }) => {
   const cyclingCaloriesPerHour = 396
   const cyclingMinutes = Math.ceil(parseInt(calories, 10) / (cyclingCaloriesPerHour / 60))
   const cyclingMiles = Math.round(math.eval((cyclingMinutes / 60) * 12))

@@ -56,8 +56,9 @@ const resultCss = {
   resultHighlightText,
 }
 
-const CalorieClimb = ({ calories }) => {
+const CalorieClimb = ({ calories, weight }) => {
   const sanitizedCalories = parseInt(calories, 10)
+  const sanitizedWeight = parseInt(weight, 10)
   return (
     <App>
       <header className={ appHeader }>
@@ -71,9 +72,13 @@ const CalorieClimb = ({ calories }) => {
           <label className={ inputLabel }>How many calories are you trying to burn?</label>
           <input className={ textInput } type="text" />
         </Field>
-        { (sanitizedCalories > 0) ?
+        <Field model="meal.weight">
+          <label className={ inputLabel }>What's your weight?</label>
+          <input className={ textInput } type="text" />
+        </Field>
+        { (sanitizedCalories > 0 && sanitizedWeight > 0) ?
           <div>
-            { counters(sanitizedCalories, resultCss) }
+            { counters(sanitizedCalories, sanitizedWeight, resultCss) }
           </div>
         : null }
       </FormContainer>
@@ -83,7 +88,8 @@ const CalorieClimb = ({ calories }) => {
 
 const mapStateToProps = (state) => {
   return {
-    calories: state.meal.calories
+    calories: state.meal.calories,
+    weight: state.meal.weight,
   }
 }
 

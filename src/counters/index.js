@@ -3,6 +3,7 @@ import stairs2 from './stairs2'
 import laughing from './laughing'
 import casualBiking from './casual_biking'
 import dogWalking from './dog_walking'
+import typing from './typing'
 
 const stdAnswers = [
   stairs1,
@@ -13,6 +14,7 @@ const addAnswers = [
   laughing,
   casualBiking,
   dogWalking,
+  typing,
 ]
 
 const ADD_RESULTS = 2
@@ -29,14 +31,14 @@ function getRandomIndexes (arr, cnt) {
   return randomArr
 }
 
-export default (calories, { resultText, resultHighlightText }) => {
+export default (calories, weight, { resultText, resultHighlightText }) => {
   const results = [
     ...stdAnswers,
     ...getRandomIndexes(addAnswers, ADD_RESULTS)
   ]
   const resultJsx = []
   results.forEach(counterFn => {
-    resultJsx.push(counterFn(calories, { resultText, resultHighlightText }))
+    resultJsx.push(counterFn({ calories, weight, resultText, resultHighlightText }))
   })
 
   return resultJsx

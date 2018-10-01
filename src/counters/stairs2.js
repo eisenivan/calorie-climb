@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default (calories, { resultText, resultHighlightText }) => {
+export default ({ calories, resultText, resultHighlightText }) => {
   const caloriesPerStep = 0.17 + 0.05
   const caloriesPerFlight = () => caloriesPerStep * 12
   const flightsOfStairs = (parseInt(calories, 10) / caloriesPerFlight()).toFixed(1)
