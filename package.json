@@ -98,12 +98,12 @@
     "style-loader": "^0.18.2",
     "webpack": "^2.1.0-beta.27",
     "webpack-dashboard": "^0.2.0",
-    "webpack-dev-server": "^2.1.0-beta.10",
+    "webpack-dev-server": "^2.11.5",
     "whatwg-fetch": "^1.0.0"
   },
   "dependencies": {
     "big.js": "^5.0.3",
-    "mathjs": "^3.16.5",
+    "mathjs": "^3.20.2",
     "numeral": "^2.0.6",
     "react-redux-form": "^1.14.1"
   }
