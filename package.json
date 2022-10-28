@@ -97,7 +97,7 @@
     "redux-saga": "^0.11.0",
     "style-loader": "^0.18.2",
     "webpack": "^2.1.0-beta.27",
-    "webpack-dashboard": "^0.2.0",
+    "webpack-dashboard": "^3.3.7",
     "webpack-dev-server": "^2.11.5",
     "whatwg-fetch": "^1.0.0"
   },
